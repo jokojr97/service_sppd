@@ -5,11 +5,8 @@ const multer = require('multer')
 const path = require('path')
 
 const app = express();
-const port = 4000;
-const authRoutes = require("./src/routes/auth")
-const pegawaiRoutes = require("./src/routes/pegawai")
-// const portofolioRoutes = require("./src/routes/portofolio")
-// const router = express.Router();
+const port = 6000;
+const sppdRoutes = require("./src/routes/sppd")
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -44,8 +41,7 @@ app.use((req, res, next) => {
 })
 
 //routes
-app.use('/v1/auth', authRoutes);
-app.use('/v1/pegawai', pegawaiRoutes);
+app.use('/v1/sppd', sppdRoutes);
 
 app.use((error, req, res, next) => {
     const status = error.errorStatus || 500;

@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
-const Pegawai = require('../models/pegawai');
-// const pegawai = require('../models/pegawai');
+const Sppd = require('../models/sppd');
+// const Sppd = require('../models/Sppd');
 
 exports.delete = async (req, res, next) => {
     const id = req.params.id || 0;
@@ -23,15 +23,15 @@ exports.delete = async (req, res, next) => {
     }
 
     try {
-        const pegawai = await Pegawai.findOne(data);
-        await pegawai.remove();
+        const sppd = await Sppd.findOne(data);
+        await sppd.remove();
         return res.status(200).json({
             message: "Data dengan id= " + id + " berhasil di hapus",
             data: true
         });
     } catch {
         return res.status(404).json({
-            message: "data Pegawai not found",
+            message: "data Sppd not found",
             eror: "not found"
         });
     }
@@ -42,7 +42,7 @@ exports.update = async (req, res, next) => {
 
     const data = {
         _id: req.body._id
-    }
+    }   
 
     // cek error validasi
     if (!errors.isEmpty()) {
@@ -54,30 +54,56 @@ exports.update = async (req, res, next) => {
             data: err
         })
     }
-
-    try {
-        const cariPegawai = await Pegawai.findOne(data);
-        const pegawai = Object.assign(cariPegawai, req.body);
-
-        pegawai.save().then(result => {
-            res.status(200).json({
+    Sppd.findOne(data)
+    .then(result => {
+        // console.log("id: ", _id)
+        // console.log("result: ", result)
+        Sppd = Object.assign(result, req.body);
+        Sppd.save().then(result2 => {
+            return res.status(200).json({
                 message: "Update Data Success",
-                data: result
+                data: result2
             });
         }).catch(err => {
             console.log("err: ", err);
-            res.status(400).json({
+            return res.status(400).json({
                 message: "invalid value",
                 eror: err
             });
         });
-
-    } catch {
+    })
+    .catch(err => {
+        // console.log(err);
         return res.status(404).json({
-            message: "data not found",
-            eror: "not found"
+            message: "data with id = '" + err.value + "' not found",
+            eror: err
         });
-    }
+        next();
+    })
+
+    // try {
+    //     const cariSppd = await Sppd.findOne(data);
+    //     const Sppd = Object.assign(cariSppd, req.body);
+
+    //     Sppd.save().then(result => {
+    //         res.status(200).json({
+    //             message: "Update Data Success",
+    //             data: result
+    //         });
+    //     }).catch(err => {
+    //         console.log("err: ", err);
+    //         res.status(400).json({
+    //             message: "invalid value",
+    //             eror: err
+    //         });
+    //     });
+
+    // } catch {
+    //     return res.status(404).json({
+    //         message: "data not found",
+    //         eror: "not found"
+    //     });
+    // }
 
 }
 exports.insert = async (req, res, next) => {
@@ -85,15 +111,15 @@ exports.insert = async (req, res, next) => {
     const errors = validationResult(req);
 
     const data = {
-        email: req.body.email
+        nomor_sppd: req.body.nomor_sppd
     }
-    //cek email pegawai sudah terdaftar
-    const cariPegawai = await Pegawai.findOne(data)
-    // console.log(caripegawai)
-    if (cariPegawai != null) {
+    //cek email Sppd sudah terdaftar
+    const cariSppd = await Sppd.findOne(data)
+    // console.log(cariSppd)
+    if (cariSppd != null) {
         return res.status(400).json({
-            message: "Email sudah terdaftar! coba pakai email lain",
-            data: cariPegawai
+            message: "Nomor SPPD sudah terdaftar! coba pakai Nomor lain",
+            data: cariSppd
         })
         next()
     }
@@ -111,40 +137,51 @@ exports.insert = async (req, res, next) => {
     }
 
     // definisi input
-    const name = req.body.name;
-    const email = req.body.email;
-    const password = req.body.password;
-    const nip = req.body.nip;
+    const nomor_sppd = req.body.nomor_sppd;
+    const pejabat_yang_memberi_perintah = req.body.pejabat_yang_memberi_perintah;
+    const pegawai_yang_diperintahkan = req.body.pegawai_yang_diperintahkan;
+    const perihal = req.body.perihal;
+    const angkutan = req.body.angkutan;
+    const tempat_berangkat = req.body.tempat_berangkat;
+    const tempat_tujuan = req.body.tempat_tujuan;
+    const lama_perjalanan = req.body.lama_perjalanan;
+    const tanggal_berangkat = req.body.tanggal_berangkat;
+    const tanggal_kembali = req.body.tanggal_kembali;
     const instansi = req.body.instansi;
-    const jabatan = req.body.jabatan;
-    const bidang = req.body.bidang;
-    const golongan = req.body.golongan;
+    const keterangan_lain = req.body.keterangan_lain;
+    const dikeluarkan_di = req.body.dikeluarkan_di;
+    const tanggal_sppd = req.body.tanggal_sppd;
+    const kode_rekening = req.body.kode_rekening;
+    const tahun = req.body.tahun;
 
-    // hashing password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const image = "user.jpg"
-
-    const insertPegawai = new Pegawai({
-        name: name,
-        email: email,
-        password: hashedPassword,
-        nip: nip,
+    const insertSppd = new Sppd({
+        nomor_sppd: nomor_sppd,
+        pejabat_yang_memberi_perintah: pejabat_yang_memberi_perintah,
+        pegawai_yang_diperintahkan: pegawai_yang_diperintahkan,
+        perihal: perihal,
+        angkutan: angkutan,
+        tempat_berangkat: tempat_berangkat,
+        tempat_tujuan: tempat_tujuan,
+        lama_perjalanan: lama_perjalanan,
+        tanggal_berangkat: tanggal_berangkat,
+        tanggal_kembali: tanggal_kembali,
         instansi: instansi,
-        jabatan: jabatan,
-        bidang: bidang,
-        golongan: golongan,
-        image: image,
-        level: {
+        keterangan_lain: keterangan_lain,
+        dikeluarkan_di: dikeluarkan_di,
+        tanggal_sppd: tanggal_sppd,
+        kode_rekening: kode_rekening,
+        tahun: tahun,
+        operator: {
             id: 1,
+            name: "Jo",
             level: "admin"
         },
     });
 
-    insertPegawai.save()
+    insertSppd.save()
         .then(result => {
             res.status(201).json({
-                message: "Register Success",
+                message: "Input SPPD Success",
                 data: result
             });
         }).catch(err => {
@@ -163,15 +200,15 @@ exports.getAll = (req, res, next) => {
     const currentPageInt = parseInt(currentPage);
     const perPageInt = parseInt(perPage);
 
-    Pegawai.find().countDocuments()
+    Sppd.find().countDocuments()
         .then(count => {
             totalItem = count;
-            return Pegawai.find().skip((currentPageInt - 1) * perPageInt).limit(perPageInt)
+            return Sppd.find().skip((currentPageInt - 1) * perPageInt).limit(perPageInt)
         })
         .then(result => {
             if (totalItem == 0) {
                 res.status(400).json({
-                    message: "data masih kosong",
+                    message: "Data masih kosong",
                     data: result,
                 })
             } else {
@@ -206,7 +243,7 @@ exports.getById = async (req, res, next) => {
     const data = {
         _id: id
     }
-    await Pegawai.findOne(data)
+    await Sppd.findOne(data)
         .then(result => {
             // console.log("id: ", id)
             // console.log("result: ", result)
