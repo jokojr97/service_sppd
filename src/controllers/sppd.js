@@ -42,7 +42,7 @@ exports.update = async (req, res, next) => {
 
     const data = {
         _id: req.body._id
-    }   
+    }
 
     // cek error validasi
     if (!errors.isEmpty()) {
@@ -54,56 +54,42 @@ exports.update = async (req, res, next) => {
             data: err
         })
     }
-    Sppd.findOne(data)
-    .then(result => {
-        // console.log("id: ", _id)
-        // console.log("result: ", result)
-        Sppd = Object.assign(result, req.body);
-        Sppd.save().then(result2 => {
-            return res.status(200).json({
-                message: "Update Data Success",
-                data: result2
-            });
-        }).catch(err => {
-            console.log("err: ", err);
-            return res.status(400).json({
-                message: "invalid value",
+
+    await Sppd.findOne(data)
+        .then(result => {
+            // console.log("id: ", id)
+            // console.log("result: ", result)
+
+            if (result) {
+                const Sppd = Object.assign(result, req.body);
+                Sppd.save().then(result => {
+                    res.status(200).json({
+                        message: "Update Data Success",
+                        data: result
+                    });
+                }).catch(err => {
+                    console.log("err: ", err);
+                    res.status(400).json({
+                        message: "invalid value",
+                        eror: err
+                    });
+                });
+
+            } else {
+                return res.status(400).json({
+                    message: "data not found",
+                    data: null,
+                })
+            }
+        })
+        .catch(err => {
+            return res.status(404).json({
+                message: "data with id = '" + err.value + "' not found",
                 eror: err
             });
-        });
-    })
-    .catch(err => {
-        // console.log(err);
-        return res.status(404).json({
-            message: "data with id = '" + err.value + "' not found",
-            eror: err
-        });
-        next();
-    })
+            next();
+        })
 
-    // try {
-    //     const cariSppd = await Sppd.findOne(data);
-    //     const Sppd = Object.assign(cariSppd, req.body);
-
-    //     Sppd.save().then(result => {
-    //         res.status(200).json({
-    //             message: "Update Data Success",
-    //             data: result
-    //         });
-    //     }).catch(err => {
-    //         console.log("err: ", err);
-    //         res.status(400).json({
-    //             message: "invalid value",
-    //             eror: err
-    //         });
-    //     });
-
-    // } catch {
-    //     return res.status(404).json({
-    //         message: "data not found",
-    //         eror: "not found"
-    //     });
-    // }
 
 }
 exports.insert = async (req, res, next) => {
