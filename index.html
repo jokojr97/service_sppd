@@ -1,11 +1,21 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+  <meta charset="utf-8" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="Aspose.Words for .NET 23.1.0" />
   <title></title>
   <style type="text/css">
+    .margin-ttd {
+      margin-left: 600px;
+    }
+
+    .margin-ttd-kadin {
+      margin-left: 300px;
+    }
+
     .table-p {
       font-size: 18pt;
       margin-top: 3px;
@@ -201,12 +211,12 @@
       <p style="font-size:10pt"><span style="font-family:Arial; -aw-import:ignore">&#xa0;</span></p>
       <p style="margin-top:0.05pt; font-size:12pt"><span style="font-family:Arial; -aw-import:ignore">&#xa0;</span>
       </p>
-      <h2 style=" line-height:110%" class="table-p"><span style="text-decoration:underline; letter-spacing:-0.1pt">SURAT
-          PRINTAH
-          PERJALANAN DINAS (SPPD)</h2>
+      <h2 style=" line-height:110%;margin-left: 250px;" class="table-p"><span
+          style="text-decoration:underline; letter-spacing:-0.1pt">SURAT PRINTAH PERJALANAN DINAS (SPPD)</h2>
       <p style="margin-top:0.25pt; font-size:10.5pt"><span
           style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
       <table cellspacing="0" cellpadding="0" style="font-size: 16pt">
+        {{#each data}}
         <tbody>
           <tr>
             <td width="400" valign="top">
@@ -217,16 +227,18 @@
               </ol>
             </td>
             <td width="22" valign="top">
-              <p class="table-p" align="center">
+              <p class="table-p" align="center" style="margin-top: 20px;">
                 :
               </p>
             </td>
             <td width="445" valign="top">
-              <p class="table-p">
-                Kepala Dinas Pemberdayaan Masyarakat dan Desa
+              <p class="table-p" style="margin-top: 20px;">
+                {{this.pejabat_yang_memberi_perintah.jabatan}}
+                <br />
               </p>
             </td>
           </tr>
+          {{#each this.pegawai_yang_diperintahkan}}
           <tr>
             <td width="400" valign="top">
               <p class="table-p">
@@ -240,14 +252,14 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                JULI KUSRIYANTO
+                {{ this.name }}
               </p>
             </td>
           </tr>
           <tr>
             <td width="400" valign="top">
               <p class="table-p" style="margin-left:22px">
-                a. Pangkat/Golongan Ruang
+                a. Pangkat/Golongan
               </p>
             </td>
             <td width="22" valign="top">
@@ -257,7 +269,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                -
+                {{ this.pangkat }}/{{ this.golongan }}
               </p>
             </td>
           </tr>
@@ -274,10 +286,12 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Staf pada Dinas PMD Kabupaten Bojonegoro
+                {{ this.jabatan }}
               </p>
             </td>
           </tr>
+
+          {{/each}}
           <tr>
             <td width="400" valign="top">
               <p class="table-p">
@@ -291,7 +305,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Dalam Rangka Menghadiri Kegiatan Sosialisasi Peraturan Daerah Kabupaten Bojonegoro
+                {{ this.perihal }}
               </p>
             </td>
           </tr>
@@ -308,7 +322,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Kendaraan Roda 4
+                {{ this.angkutan }}
               </p>
             </td>
           </tr>
@@ -325,7 +339,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Bojonegoro
+                {{ this.tempat_berangkat }}
               </p>
             </td>
           </tr>
@@ -342,7 +356,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Kecamatan Malo
+                {{ this.tempat_tujuan }}
               </p>
             </td>
           </tr>
@@ -359,7 +373,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                1 (satu) Hari
+                {{ this.lama_perjalanan }} Hari
               </p>
             </td>
           </tr>
@@ -376,7 +390,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Samstag, 5. Dezember 2020
+                {{ this.tanggal_berangkat }}
               </p>
             </td>
           </tr>
@@ -393,7 +407,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Samstag, 5. Dezember 2020
+                {{ this.tanggal_kembali }}
               </p>
             </td>
           </tr>
@@ -421,7 +435,7 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                Dinas PMD Kab. Bojonegoro
+                {{ this.instansi }}
               </p>
             </td>
           </tr>
@@ -438,21 +452,28 @@
             </td>
             <td width="445" valign="top">
               <p class="table-p">
-                2.07.2.07.01.22.01.5.2.2.15.01
+                {{ this.kode_rekening }}
               </p>
             </td>
           </tr>
           <tr>
+          <tr>
             <td width="400" valign="top">
-              <p class="table-p">
+              <p class="table-p" style="margin-left:22px">
                 9. Keterangan lain-lain
               </p>
             </td>
-            <td width="364" colspan="2" valign="top">
-              <p class="table-p">
+            <td width="22" valign="top">
+              <p class="table-p" align="center">
                 :
               </p>
             </td>
+            <td width="445" valign="top">
+              <p class="table-p">
+                {{ this.keterangan_lain }}
+              </p>
+            </td>
+          </tr>
           </tr>
         </tbody>
       </table>
@@ -461,64 +482,49 @@
     <p style="font-size:10pt"><span style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
     <p style="margin-top:0.55pt"><span style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span>
     </p>
-    <p class="BodyText" style="margin-left:226.65pt"><span style="letter-spacing:-0.05pt">Dikeluarkan</span><span
-        style="letter-spacing:-0.8pt"> </span><span style="letter-spacing:-0.05pt">di</span><span
-        style="width:26.18pt; font-family:'Times New Roman'; letter-spacing:-0.05pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:325.7pt">&#xa0;</span><span>:</span><span
-        style="letter-spacing:2.4pt"> </span><span style="letter-spacing:-0.05pt">Bojonegoro</span></p>
-    <p class="BodyText" style="margin-top:1.65pt; margin-left:226.65pt"><span
-        style="letter-spacing:-0.05pt">Pada</span><span style="letter-spacing:-0.8pt"> </span><span
-        style="letter-spacing:-0.05pt">Tanggal</span><span
-        style="width:27.44pt; font-family:'Times New Roman'; letter-spacing:-0.05pt; display:inline-block; -aw-tabstop-align:left; -aw-tabstop-pos:325.7pt">&#xa0;</span><span>:</span><span
-        style="letter-spacing:2.6pt"> </span><span>5</span><span style="letter-spacing:-0.3pt"> </span><span
-        style="letter-spacing:-0.05pt">Desember</span><span style="letter-spacing:-0.3pt"> </span><span
-        style="letter-spacing:-0.05pt">2020</span></p>
+    <p class="table-p margin-ttd"><span style="letter-spacing:-0.05pt">Dikeluarkan di &nbsp; &nbsp; :
+        {{ this.dikeluarkan_di }}</span></p>
+    <p class="table-p margin-ttd"><span style="letter-spacing:-0.05pt">Pada
+        Tanggal &nbsp; &nbsp; &nbsp; &nbsp;: {{ this.tanggal_sppd }}</span><span style="letter-spacing:-0.8pt"> </span>
+    </p>
     <p style="font-size:10pt"><span style="font-family:Arial; -aw-import:ignore">&#xa0;</span></p>
     <p style="margin-top:0.55pt; font-size:10pt"><span style="font-family:Arial; -aw-import:ignore">&#xa0;</span>
     </p>
-    <p class="BodyText" style="margin-left:201.6pt; text-align:center"><span
-        style="letter-spacing:-0.05pt">Pejabat</span><span style="letter-spacing:-0.65pt"> </span><span
-        style="letter-spacing:-0.1pt">yang</span><span style="letter-spacing:-0.6pt"> </span><span
-        style="letter-spacing:-0.05pt">memberi</span><span style="letter-spacing:-0.6pt"> </span><span
-        style="letter-spacing:-0.05pt">Perintah</span></p>
-    <p style="font-size:13pt"><span style="font-family:Arial; -aw-import:ignore">&#xa0;</span></p>
-    <p
-      style="margin-right:95.95pt; margin-left:297.6pt; text-indent:0.05pt; text-align:center; line-height:105%; font-size:14pt">
-      <span
-        style="line-height:105%; font-family:Arial; font-size:11pt; font-weight:bold; letter-spacing:-0.05pt">KEPALA</span><span
-        style="line-height:105%; font-family:Arial; font-size:11pt; font-weight:bold; letter-spacing:1.35pt">
-      </span><span
-        style="line-height:105%; font-family:Arial; font-size:11pt; font-weight:bold; letter-spacing:-0.05pt">DINAS</span><span
-        style="line-height:105%; font-family:Arial; font-size:11pt; font-weight:bold; letter-spacing:1.6pt">
-      </span><span
-        style="line-height:105%; font-family:Arial; font-size:11pt; font-weight:bold; letter-spacing:-0.05pt">PMD</span><span
-        style="line-height:105%; font-family:'Times New Roman'; font-size:11pt; font-weight:bold; letter-spacing:1.15pt">
-      </span><span style="font-family:Arial; font-weight:bold; letter-spacing:-0.1pt">KABUPATEN</span><span
-        style="font-family:Arial; font-weight:bold; letter-spacing:-1.65pt"> </span><span
-        style="font-family:Arial; font-weight:bold">BOJONEGORO</span>
-    </p>
-    <p><span style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
-    <p><span style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
-    <p><span style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
-    <p><span style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
-    <p style="margin-top:0.05pt; font-size:9pt"><span
-        style="font-family:Arial; font-weight:bold; -aw-import:ignore">&#xa0;</span></p>
-    <h5 style="margin-left:201.8pt; text-align:center"><span
-        style="text-decoration:underline; letter-spacing:-0.05pt">MACHMUDDIN,</span><span
-        style="text-decoration:underline; letter-spacing:-0.8pt"> </span><span
-        style="text-decoration:underline; letter-spacing:-0.1pt">AP.,</span><span
-        style="text-decoration:underline; letter-spacing:-0.75pt"> </span><span
-        style="text-decoration:underline">MM.</span></h5>
-    <p class="BodyText" style="margin-top:0.45pt; margin-left:201.7pt; text-align:center; line-height:13.15pt"><span
-        style="letter-spacing:-0.05pt">Pembina</span><span style="letter-spacing:-0.55pt"> </span><span
-        style="letter-spacing:-0.05pt">Tingkat</span><span style="letter-spacing:-0.55pt"> </span><span>I</span>
-    </p>
-    <p class="BodyText" style="margin-top:0pt; margin-left:201.55pt; text-align:center; line-height:13.15pt"><span
-        style="letter-spacing:-0.05pt">NIP.</span><span style="letter-spacing:-0.5pt"> </span><span
-        style="letter-spacing:-0.05pt">19740903</span><span style="letter-spacing:-0.4pt"> </span><span
-        style="letter-spacing:-0.05pt">199412</span><span style="letter-spacing:-0.4pt">
-      </span><span>1</span><span style="letter-spacing:-0.45pt"> </span><span style="letter-spacing:-0.05pt">001</span>
-    </p>
-    <p style="text-align:center; line-height:13.15pt"><span style="-aw-import:ignore">&#xa0;</span></p>
+    <center>
+      <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">Pejabat yang memberi perintah</span><span
+          style="letter-spacing:-0.8pt"> </span>
+      </p>
+      <b style="margin-top: 5px;">
+        <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">KEPALA DINAS</span><span
+            style="letter-spacing:-0.8pt"> </span>
+        </p>
+        <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">PEMBERDAYAAN MASYARAKAT
+            DAN DESA</span><span style="letter-spacing:-0.8pt"> </span>
+        </p>
+        <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">KABUPATEN BOJONEGORO</span><span
+            style="letter-spacing:-0.8pt"> </span>
+        </p>
+      </b>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <b>
+        <u>
+          <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">MACHMUDDIN, AP., MM</span><span
+              style="letter-spacing:-0.8pt"> </span>
+        </u>
+      </b>
+      <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">Pembina Utama Muda</span><span
+          style="letter-spacing:-0.8pt"> </span>
+      </p>
+      <p class="table-p margin-ttd-kadin"><span style="letter-spacing:-0.05pt">NIP. 19740903 199412 1 001</span><span
+          style="letter-spacing:-0.8pt"> </span>
+      </p>
+    </center>
+
+    {{/each}}
   </div>
 </body>
 

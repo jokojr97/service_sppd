@@ -295,6 +295,12 @@ exports.getSearch = async (req, res, next) => {
 
 }
 
+const setPenerimaPerintah = (data) => {
+    data.map((v, i) => {
+        return v
+    })
+}
+
 exports.createPDF = async (req, res, next) => {
 
     const html = fs.readFileSync('./index.html', 'utf-8')
@@ -303,39 +309,74 @@ exports.createPDF = async (req, res, next) => {
         orientation: "portrait",
     };
 
-    const users = [
+    const pegawai = req.body.pegawai_yang_diperintahkan
+    var datapegawai = []
+    pegawai.map((v, i) => {
+        if (i < 1) {
+            datapegawai = v
+        }
+    })
+
+    const datainput = [
         {
-            name: "Shyam",
-            age: "26",
-        },
-        {
-            name: "Navjot",
-            age: "26",
-        },
-        {
-            name: "Vitthal",
-            age: "26",
-        },
+            nomor_sppd: req.body.nomor_sppd,
+            pejabat_yang_memberi_perintah: {
+                name: req.body.pejabat_yang_memberi_perintah.name,
+                jabatan: req.body.pejabat_yang_memberi_perintah.jabatan,
+                pangkat: req.body.pejabat_yang_memberi_perintah.pangkat,
+                nip: req.body.pejabat_yang_memberi_perintah.nip,
+                golongan: req.body.pejabat_yang_memberi_perintah.golongan
+            },
+            pegawai_yang_diperintahkan: [
+                {
+                    name: datapegawai.name,
+                    jabatan: datapegawai.jabatan,
+                    pangkat: datapegawai.pangkat,
+                    nip: datapegawai.nip,
+                    golongan: datapegawai.golongan
+                }
+            ],
+            perihal: req.body.perihal,
+            angkutan: req.body.angkutan,
+            tempat_berangkat: req.body.tempat_berangkat,
+            tempat_tujuan: req.body.tempat_tujuan,
+            lama_perjalanan: req.body.lama_perjalanan,
+            tanggal_berangkat: req.body.tanggal_berangkat,
+            tanggal_kembali: req.body.tanggal_kembali,
+            instansi: req.body.instansi,
+            keterangan_lain: req.body.keterangan_lain,
+            dikeluarkan_di: req.body.dikeluarkan_di,
+            tanggal_sppd: req.body.tanggal_sppd,
+            kode_rekening: req.body.kode_rekening,
+            tahun: req.body.tahun,
+        }
     ];
     const document = {
         html: html,
         data: {
-            users: users,
+            data: datainput,
         },
-        path: `./pdf/output${Math.random()}.pdf`,
+        path: `./pdf/sppd_${req.body.nomor_sppd}.pdf`,
         type: "",
     };
 
     pdf.create(document, options)
-        .then((res) => {
-            console.log(res);
+        .then((result) => {
+            console.log(result);
+            return res.status(200).json({
+                message: "pdf berhasil dibuat",
+                data: result,
+                pegawai: datapegawai
+            });
         })
         .catch((error) => {
             console.error(error);
+            return res.status(404).json({
+                message: "data with id = '" + error.value + "' not found",
+                eror: error
+            });
+            next();
         });
 
-    return res.status(200).json({
-        message: "pdf berhasil dibuat",
-        eror: "data"
-    });
+    console.log("data", dataPegawai)
 }

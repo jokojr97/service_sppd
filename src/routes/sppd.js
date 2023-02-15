@@ -47,7 +47,7 @@ router.patch('/update', [
 // [GET]: /v1/pegawai/ID
 router.get('/:id', sppdController.getById)
 
-router.get('/pdf/create', sppdController.createPDF)
+router.post('/pdf/create', sppdController.createPDF)
 // [GET]: /v1/pegawai/ID
 router.get('/search/:id', sppdController.getSearch)
 
