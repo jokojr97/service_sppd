@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const path = require('path');
-const fs = require('fs');
+const pdf = require('pdf-creator-node')
+const fs = require('fs')
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
@@ -292,4 +293,49 @@ exports.getSearch = async (req, res, next) => {
             next();
         })
 
+}
+
+exports.createPDF = async (req, res, next) => {
+
+    const html = fs.readFileSync('./index.html', 'utf-8')
+    const options = {
+        format: "F4",
+        orientation: "portrait",
+    };
+
+    const users = [
+        {
+            name: "Shyam",
+            age: "26",
+        },
+        {
+            name: "Navjot",
+            age: "26",
+        },
+        {
+            name: "Vitthal",
+            age: "26",
+        },
+    ];
+    const document = {
+        html: html,
+        data: {
+            users: users,
+        },
+        path: `./pdf/output${Math.random()}.pdf`,
+        type: "",
+    };
+
+    pdf.create(document, options)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    return res.status(200).json({
+        message: "pdf berhasil dibuat",
+        eror: "data"
+    });
 }
