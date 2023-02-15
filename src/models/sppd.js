@@ -73,6 +73,10 @@ const Sppd = new Schema({
     file: {
         type: String,
         require: false
+    },
+    idPerjalanan: {
+        type: String,
+        require: false
     }
 }, {
     timestamps: true

@@ -47,6 +47,9 @@ router.patch('/update', [
 // [GET]: /v1/pegawai/ID
 router.get('/:id', sppdController.getById)
 
+// [GET]: /v1/pegawai/ID
+router.get('/search/:id', sppdController.getSeach)
+
 // [DELETE]: /v1/pegawai/ID
 router.delete('/:id', sppdController.delete)
 

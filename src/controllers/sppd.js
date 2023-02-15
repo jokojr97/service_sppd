@@ -254,3 +254,42 @@ exports.getById = async (req, res, next) => {
         })
 
 }
+
+exports.getSearch = async (req, res, next) => {
+    const id = req.params.id || 0;
+    if (id == 0) {
+        return res.status(400).json({
+            message: "invalid value id",
+            data: null
+        })
+        next()
+    }
+
+    const data = {
+        _id: id
+    }
+    await Sppd.findOne(data)
+        .then(result => {
+            // console.log("id: ", id)
+            // console.log("result: ", result)
+            if (result) {
+                return res.status(200).json({
+                    message: "Data berhasil ditampilkan",
+                    data: result,
+                })
+            } else {
+                return res.status(400).json({
+                    message: "data not found",
+                    data: null,
+                })
+            }
+        })
+        .catch(err => {
+            return res.status(404).json({
+                message: "data with id = '" + err.value + "' not found",
+                eror: err
+            });
+            next();
+        })
+
+}

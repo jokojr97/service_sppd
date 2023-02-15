@@ -5,7 +5,7 @@ const multer = require('multer')
 const path = require('path')
 
 const app = express();
-const port = 6000;
+const port = 3001;
 const sppdRoutes = require("./src/routes/sppd")
 
 const fileStorage = multer.diskStorage({
@@ -56,7 +56,7 @@ app.use((error, req, res, next) => {
 
 mongoose.connect('mongodb+srv://jokoriy:IF4G7vEG7fnE7Cu9@cluster0.2izfxze.mongodb.net/?retryWrites=true&w=majority')
     .then(() => {
-        app.listen(port, () => console.log('connection success'))
+        app.listen(port, () => console.log(`connection success ${port}`))
     })
     .catch(err => console.log(err))
 
