@@ -301,15 +301,31 @@ const setPenerimaPerintah = (data) => {
     })
 }
 
+const settext = (e) => {
+    if (e==1) {
+        return "satu"
+    } else if (e==2) {
+        return "dua"
+    }else if (e==3) {
+        return "tiga"
+    }else if (e==4) {
+        return "empat"
+    }else if (e==5) {
+        return "lima"
+    }
+}
+
 exports.createPDF = async (req, res, next) => {
 
     const html = fs.readFileSync('./index.html', 'utf-8')
     const options = {
-        format: "F4",
+        format: "legal",
         orientation: "portrait",
     };
 
     const pegawai = req.body.pegawai_yang_diperintahkan
+    const settextLamaPerjalanan = settext(req.body.lama_perjalanan)
+    console.log("data", pegawai)
     var datapegawai = []
     pegawai.map((v, i) => {
         if (i < 1) {
@@ -341,6 +357,7 @@ exports.createPDF = async (req, res, next) => {
             tempat_berangkat: req.body.tempat_berangkat,
             tempat_tujuan: req.body.tempat_tujuan,
             lama_perjalanan: req.body.lama_perjalanan,
+            text_lamaperjalanan: settextLamaPerjalanan,
             tanggal_berangkat: req.body.tanggal_berangkat,
             tanggal_kembali: req.body.tanggal_kembali,
             instansi: req.body.instansi,
@@ -378,5 +395,4 @@ exports.createPDF = async (req, res, next) => {
             next();
         });
 
-    console.log("data", dataPegawai)
 }
