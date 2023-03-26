@@ -302,15 +302,15 @@ const setPenerimaPerintah = (data) => {
 }
 
 const settext = (e) => {
-    if (e==1) {
+    if (e == 1) {
         return "satu"
-    } else if (e==2) {
+    } else if (e == 2) {
         return "dua"
-    }else if (e==3) {
+    } else if (e == 3) {
         return "tiga"
-    }else if (e==4) {
+    } else if (e == 4) {
         return "empat"
-    }else if (e==5) {
+    } else if (e == 5) {
         return "lima"
     }
 }
@@ -319,7 +319,7 @@ exports.createPDF = async (req, res, next) => {
 
     const html = fs.readFileSync('./index.html', 'utf-8')
     const options = {
-        format: "legal",
+        format: "A4",
         orientation: "portrait",
     };
 

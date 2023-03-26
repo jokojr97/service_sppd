@@ -31,6 +31,7 @@ const fileFilter = (req, file, cb) => {
 
 app.use(bodyParser.json()) // type json
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/pdf', express.static(path.join(__dirname, 'pdf')));
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
 
 app.use((req, res, next) => {
